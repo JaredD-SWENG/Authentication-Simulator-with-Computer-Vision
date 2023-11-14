@@ -1,5 +1,0 @@
-flask
-opencv-python
-flask-socketio
-Pillow
-imutils

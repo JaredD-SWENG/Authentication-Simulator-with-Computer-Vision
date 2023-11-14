@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: facenet-models
+Version: 0.0
+Summary: Manages facenet_pytorch's face detection/recognition models
+Platform: Windows
+Platform: Linux
+Platform: Mac OS-X
+Platform: Unix
