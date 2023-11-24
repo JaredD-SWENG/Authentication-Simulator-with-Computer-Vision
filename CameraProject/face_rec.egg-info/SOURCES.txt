@@ -1,9 +1,0 @@
-setup.py
-face_rec/__init__.py
-face_rec/_implementations.py
-face_rec.egg-info/PKG-INFO
-face_rec.egg-info/SOURCES.txt
-face_rec.egg-info/dependency_links.txt
-face_rec.egg-info/top_level.txt
-face_rec/face_db/__init__.py
-face_rec/whispers/__init__.py
