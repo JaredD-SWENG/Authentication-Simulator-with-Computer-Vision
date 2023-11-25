@@ -12,7 +12,8 @@ import imutils
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app) 
+socketio = SocketIO(app, cors_allowed_origins="*")  # Allow all origins for WebSocket connections
+
 
 # import ml.py
 import ml
@@ -45,6 +46,13 @@ def image(data_image):
     # Process the image frame
     frame = imutils.resize(frame, width=700)
     frame = cv2.flip(frame, 1)
+
+    # Call is_authorized function
+    if ml.is_authorized(frame):
+        print("Authorized person detected.")
+    else:
+        print("Unauthorized person detected.")
+
     imgencode = cv2.imencode('.jpg', frame)[1]
 
     # base64 encode
@@ -56,12 +64,8 @@ def image(data_image):
     emit('response_back', stringData)
 
 
+
 # Run the server
 if __name__ == '__main__':
-    
-    # train the model
-    ml.train()
-        
-    # start the server
-    app.run(port = 8000)
-    socketio.run(app)
+     
+    socketio.run(app, port=8000)

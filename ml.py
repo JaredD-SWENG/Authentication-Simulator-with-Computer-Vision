@@ -28,12 +28,20 @@
 #     recall = recall_score(y_test, result, average="macro")
 #     return [accuracy, precision, recall]
 
-from camera import take_picture
-import face_rec.face_db as face_db
-face_db.list_entries()
-
 from face_rec import show_image_with_recognition
-img = take_picture()
-fig, ax, matches, dets, descriptors = show_image_with_recognition(img)
-face_db.add_descriptors(["dhruv gupta"], descriptors)
+from face_rec.whispers import labeled_pics_to_descriptors
+from pathlib import Path
+from scipy.spatial import distance
 
+def is_authorized(img):
+    _, _, matches, _, descriptors = show_image_with_recognition(img)
+    authorized_descriptors, authorized_names, _ = labeled_pics_to_descriptors(Path("face_rec") / "pics")
+    
+    for descriptor in descriptors:
+        for auth_descriptor, auth_name in zip(authorized_descriptors, authorized_names):
+            if distance.euclidean(descriptor, auth_descriptor) < 0.6:  # 0.6 is a threshold, can be adjusted
+
+                print(f"{auth_name} is authorized.")
+                return True
+    print("Person is not authorized.")
+    return False
