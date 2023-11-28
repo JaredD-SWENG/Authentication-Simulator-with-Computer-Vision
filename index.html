@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>ML App</title>
+    <title>Face ID App</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script
       async
@@ -10,12 +10,67 @@
       id="opencvjs"
       onload="onCVLoad()"
     ></script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+
+      #container {
+        text-align: center;
+      }
+
+      #canvasOutput {
+        border: 2px solid #333;
+        margin-bottom: 10px;
+      }
+
+      #videoElement {
+        max-width: 100%;
+        margin-bottom: 10px;
+      }
+
+      button {
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .video {
+        text-align: center;
+      }
+
+      #image {
+        max-width: 100%;
+      }
+
+      #authorizationStatus {
+        margin-top: 10px;
+        font-size: 18px;
+      }
+    </style>
   </head>
   <body>
     <div id="container">
       <canvas id="canvasOutput"></canvas>
       <video autoplay="true" id="videoElement"></video>
       <button onclick="captureImage()">Capture Image</button>
+      <div id="authorizationStatus"></div>
+      <!-- New element for displaying authorization status -->
     </div>
 
     <div class="video">

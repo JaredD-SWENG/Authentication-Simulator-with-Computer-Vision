@@ -79,33 +79,27 @@ function captureImage() {
 }
 socket.on("response_back", function (data) {
   const image_id = document.getElementById("image");
-  console.log("response", data);
+  const authorizationStatus = document.getElementById("authorizationStatus");
 
   // Display the image
   image_id.src = data.image;
 
-  // Check if authorized and handle bounding box
+  // Update the authorization status
   if (data.authorized) {
     // Handle authorized case
     console.log("Authorized person detected.");
+    authorizationStatus.textContent = "Authorized person detected.";
+    authorizationStatus.style.color = "green";
   } else {
     // Handle unauthorized case
     console.log("Unauthorized person detected.");
+    authorizationStatus.textContent = "Unauthorized person detected.";
+    authorizationStatus.style.color = "red";
+  }
 
-    // Access bounding box information: data.boxes
+  // Check if authorized and handle bounding box
+  if (!data.authorized && data.boxes) {
     const canvasOutput = document.getElementById("canvasOutput");
     const ctx = canvasOutput.getContext("2d");
-
-    // Draw bounding boxes on the canvas
-    for (const box of data.boxes) {
-      ctx.beginPath();
-      ctx.rect(box[0], box[1], box[2] - box[0], box[3] - box[1]);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "red";
-      ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
-      ctx.stroke();
-      ctx.fill();
-      ctx.closePath();
-    }
   }
 });

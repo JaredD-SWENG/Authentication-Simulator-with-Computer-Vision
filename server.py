@@ -57,7 +57,7 @@ def image(data_image):
 
     # Draw bounding boxes on the image
     for box in boxes:
-        cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (0, 255, 0), 2)
+        cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (255, 255, 0), 2)
 
     imgencode = cv2.imencode('.jpg', frame)[1]
 
