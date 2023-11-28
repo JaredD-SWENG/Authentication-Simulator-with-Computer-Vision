@@ -48,10 +48,16 @@ def image(data_image):
     frame = cv2.flip(frame, 1)
 
     # Call is_authorized function
-    if ml.is_authorized(frame):
+    authorized, boxes = ml.is_authorized(frame)
+    
+    if authorized:
         print("Authorized person detected.")
     else:
         print("Unauthorized person detected.")
+
+    # Draw bounding boxes on the image
+    for box in boxes:
+        cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (0, 255, 0), 2)
 
     imgencode = cv2.imencode('.jpg', frame)[1]
 
@@ -61,7 +67,7 @@ def image(data_image):
     stringData = b64_src + stringData
 
     # emit the frame back
-    emit('response_back', stringData)
+    emit('response_back', {'image': stringData, 'authorized': authorized})
 
 
 
