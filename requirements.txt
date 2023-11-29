@@ -3,3 +3,11 @@ opencv-python
 flask-socketio
 Pillow
 imutils
+numpy 
+matplotlib 
+jupyter 
+torch 
+opencv-python 
+scikit-image 
+facenet-pytorch 
+jupyterthemes
