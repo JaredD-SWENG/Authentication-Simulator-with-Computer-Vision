@@ -84,15 +84,20 @@ def image(data_image):
     for box in boxes:
         cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), color, 2)
 
-    imgencode = cv2.imencode('.jpg', frame)[1]
+        imgencode = cv2.imencode('.jpg', frame)[1]
 
-    # base64 encode
-    stringData = base64.b64encode(imgencode).decode('utf-8')
-    b64_src = 'data:image/jpg;base64,'
-    stringData = b64_src + stringData
+        # base64 encode
+        stringData = base64.b64encode(imgencode).decode('utf-8')
+        b64_src = 'data:image/jpg;base64,'
+        stringData = b64_src + stringData
 
-    # emit the frame back
-    emit('response_back', {'image': stringData, 'authorized': authorized})
+        # emit the frame back
+        emit('response_back', {'image': stringData, 'authorized': authorized})
+
+    except AttributeError as e:
+        # Handle the AttributeError
+        print(f"AttributeError: {e}")
+        emit('response_back', {'error': 'Face not detected in image'})
 
 @socketio.on('new-auth-image')
 def new_auth_image(data):
