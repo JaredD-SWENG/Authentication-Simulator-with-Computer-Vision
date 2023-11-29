@@ -81,6 +81,12 @@ socket.on("response_back", function (data) {
   const image_id = document.getElementById("image");
   const authorizationStatus = document.getElementById("authorizationStatus");
 
+  if (data.error) {
+    // Handle error case
+    alert("Face not detected in image");
+    return;
+  }
+
   // Display the image
   image_id.src = data.image;
 
