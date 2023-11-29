@@ -68,31 +68,31 @@ def image(data_image):
     frame = imutils.resize(frame, width=700)
     frame = cv2.flip(frame, 1)
 
-    # Call is_authorized function
-    authorized, boxes = ml.is_authorized(frame)
-    
-    color = (255, 255, 0)
+    try: 
+        # Call is_authorized function
+        authorized, boxes = ml.is_authorized(frame)
+        
+        color = (255, 255, 0)
+        if authorized:
+            print("Authorized person detected.")
+            color = (0, 200, 0)
+        else:
+            print("Unauthorized person detected.")
+            color = (0, 0, 255)
 
-    if authorized:
-        print("Authorized person detected.")
-        color = (0, 200, 0)
-    else:
-        print("Unauthorized person detected.")
-        color = (0, 0, 255)
+        # Draw bounding boxes on the image
+        for box in boxes:
+            cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), color, 2)
 
-    # Draw bounding boxes on the image
-    for box in boxes:
-        cv2.rectangle(frame, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), color, 2)
+            imgencode = cv2.imencode('.jpg', frame)[1]
 
-        imgencode = cv2.imencode('.jpg', frame)[1]
+            # base64 encode
+            stringData = base64.b64encode(imgencode).decode('utf-8')
+            b64_src = 'data:image/jpg;base64,'
+            stringData = b64_src + stringData
 
-        # base64 encode
-        stringData = base64.b64encode(imgencode).decode('utf-8')
-        b64_src = 'data:image/jpg;base64,'
-        stringData = b64_src + stringData
-
-        # emit the frame back
-        emit('response_back', {'image': stringData, 'authorized': authorized})
+            # emit the frame back
+            emit('response_back', {'image': stringData, 'authorized': authorized})
 
     except AttributeError as e:
         # Handle the AttributeError
