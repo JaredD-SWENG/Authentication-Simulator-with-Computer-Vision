@@ -52,6 +52,7 @@
 
       .video {
         text-align: center;
+        margin: 75px;
       }
 
       #image {
@@ -66,8 +67,8 @@
   </head>
   <body>
     <div id="container">
-      <canvas id="canvasOutput"></canvas>
       <video autoplay="true" id="videoElement"></video>
+      <canvas id="canvasOutput"></canvas>
       <button onclick="captureImage()">Capture Image</button>
       <div id="authorizationStatus"></div>
       <!-- New element for displaying authorization status -->
