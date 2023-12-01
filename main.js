@@ -8,6 +8,7 @@ socket.on("connect", function () {
 async function playVideo() {
   const video = document.querySelector("#videoElement");
   const canvasOutput = document.querySelector("#canvasOutput");
+  const image = document.querySelector("#output-image");
 
   video.width = 500;
   video.height = 375;
@@ -40,6 +41,9 @@ async function playVideo() {
   setInterval(() => {
     if (captureButtonClicked) {
       cap.read(src);
+      video.classList.add('hidden');
+      image.classList.add('hidden');
+      canvasOutput.classList.remove('hidden')
 
       // Draw the video frame onto the canvas
       const ctx = canvasOutput.getContext("2d");
@@ -53,7 +57,7 @@ async function playVideo() {
 
       captureButtonClicked = false; // Reset the flag
     }
-  }, 10000 / FPS);
+  }, 1000 / FPS);
 }
 
 async function onCVLoad() {
@@ -78,34 +82,52 @@ function captureImage() {
   captureButtonClicked = true;
 }
 socket.on("response_back", function (data) {
-  const image_id = document.getElementById("image");
+  const video = document.querySelector("#videoElement");
+  const canvasOutput = document.querySelector("#canvasOutput");
+  const image = document.querySelector("#output-image");
+
   const authorizationStatus = document.getElementById("authorizationStatus");
+
+  video.classList.add('hidden');
+  canvasOutput.classList.add('hidden');
+  image.classList.remove('hidden');
 
   if (data.error) {
     // Handle error case
-    alert("Face not detected in image");
-    return;
-  }
+    console.log("No Face Detected");
+    authorizationStatus.textContent = "No Face Detected.";
+    authorizationStatus.style.color = "black";
 
-  // Display the image
-  image_id.src = data.image;
-
-  // Update the authorization status
-  if (data.authorized) {
-    // Handle authorized case
-    console.log("Authorized person detected.");
-    authorizationStatus.textContent = "Authorized person detected.";
-    authorizationStatus.style.color = "green";
+    image.src = ""
   } else {
-    // Handle unauthorized case
-    console.log("Unauthorized person detected.");
-    authorizationStatus.textContent = "Unauthorized person detected.";
-    authorizationStatus.style.color = "red";
+    // Display the image
+    image.src = data.image;
+    
+    // Update the authorization status
+    if (data.authorized) {
+      // Handle authorized case
+      console.log("Authorized person detected.");
+      authorizationStatus.textContent = "Authorized person detected.";
+      authorizationStatus.style.color = "green";
+    } else {
+      // Handle unauthorized case
+      console.log("Unauthorized person detected.");
+      authorizationStatus.textContent = "Unauthorized person detected.";
+      authorizationStatus.style.color = "red";
+    }
   }
-
+    
   // Check if authorized and handle bounding box
   if (!data.authorized && data.boxes) {
     const canvasOutput = document.getElementById("canvasOutput");
     const ctx = canvasOutput.getContext("2d");
   }
+
+  setTimeout(() => {
+    video.classList.remove('hidden');
+    canvasOutput.classList.add('hidden');
+    image.classList.add('hidden');
+    authorizationStatus.textContent = "Push Unlock Button to Access";
+    authorizationStatus.style.color = "black";
+  }, 5000);
 });

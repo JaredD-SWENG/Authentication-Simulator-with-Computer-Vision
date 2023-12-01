@@ -66,7 +66,7 @@ def image(data_image):
 
     # Process the image frame
     frame = imutils.resize(frame, width=700)
-    frame = cv2.flip(frame, 1)
+    # frame = cv2.flip(frame, 1)
 
     try: 
         # Call is_authorized function
@@ -118,7 +118,7 @@ def new_auth_image(data):
 
     # Process the image frame
     frame = imutils.resize(frame, width=700)
-    frame = cv2.flip(frame, 1)
+    # frame = cv2.flip(frame, 1)
 
     # write to file
     path = Path("face_rec") / "pics"

@@ -15,16 +15,14 @@
   </head>
   <body>
     <div id="container">
-      <h3>THIS IS THE INDEX</h3>
-      <video autoplay="true" id="videoElement"></video>
-        <button onclick="captureImage()">Capture Image</button>
+      <h3>Unlock with face</h3>
+      <div class="video">
+        <video autoplay="true" id="videoElement" class="visible"></video>
+        <canvas id="canvasOutput" class="hidden"></canvas>
+        <img id="output-image" class="hidden"/>
       </div>
-      <!-- New element for displaying authorization status -->
-    </div>
-    
-    <div class="video">
-      <canvas id="canvasOutput"></canvas>
-      <img id="image" />
+      <button onclick="captureImage()">Unlock</button>
+      <label id="authorizationStatus">Push Unlock Button to Access</label>
     </div>
     <script src="main.js"></script>
   </body>

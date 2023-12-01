@@ -10,7 +10,19 @@ body {
 }
 
 #container {
-  text-align: center;
+  display: flex;
+  flex: 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.video {
+  display: flex;
+  flex: 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #canvasOutput {
@@ -19,7 +31,11 @@ body {
 }
 
 #videoElement {
-  max-width: 100%;
+  flex: 1 0;
+  margin-bottom: 10px;
+}
+
+#output-image {
   margin-bottom: 10px;
 }
 
@@ -41,7 +57,7 @@ button:hover {
   text-align: center;
 }
 
-#image {
+#output-image {
   max-width: 100%;
 }
 
