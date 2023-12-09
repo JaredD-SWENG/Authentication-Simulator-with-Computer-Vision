@@ -40,6 +40,9 @@ pip install -r requirements.txt
 
 Depending on the installation ffmpeg may have to be installed.
 
+```sh
+sudo apt-get install ffmpeg libsm6 libxext6  -y
+```
 
 ### Running
 
