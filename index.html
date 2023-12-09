@@ -10,72 +10,19 @@
       id="opencvjs"
       onload="onCVLoad()"
     ></script>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f4f4f4;
-      }
 
-      #container {
-        text-align: center;
-      }
-
-      #canvasOutput {
-        border: 2px solid #333;
-        margin-bottom: 10px;
-      }
-
-      #videoElement {
-        max-width: 100%;
-        margin-bottom: 10px;
-      }
-
-      button {
-        padding: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-      }
-
-      button:hover {
-        background-color: #45a049;
-      }
-
-      .video {
-        text-align: center;
-        margin: 75px;
-      }
-
-      #image {
-        max-width: 100%;
-      }
-
-      #authorizationStatus {
-        margin-top: 10px;
-        font-size: 18px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body>
     <div id="container">
-      <video autoplay="true" id="videoElement"></video>
-      <canvas id="canvasOutput"></canvas>
-      <button onclick="captureImage()">Capture Image</button>
-      <div id="authorizationStatus"></div>
-      <!-- New element for displaying authorization status -->
-    </div>
-
-    <div class="video">
-      <img id="image" />
+      <h3>Unlock with face</h3>
+      <div class="video">
+        <video autoplay="true" id="videoElement" class="visible"></video>
+        <canvas id="canvasOutput" class="hidden"></canvas>
+        <img id="output-image" class="hidden"/>
+      </div>
+      <button onclick="captureImage()">Unlock</button>
+      <label id="authorizationStatus">Push Unlock Button to Access</label>
     </div>
     <script src="main.js"></script>
   </body>

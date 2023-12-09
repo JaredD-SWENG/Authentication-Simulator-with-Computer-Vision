@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Face ID App</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script
+      async
+      src="https://docs.opencv.org/master/opencv.js"
+      id="opencvjs"
+      onload="onCVLoad()"
+    ></script>
+
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h3>Add New User</h3>
+      <video autoplay="true" id="videoElement"></video>
+      <div id="new-person">
+        <label>New User Name:</label>
+        <input id="new-user-name" type="text" />
+        <button onclick="captureImage()">Capture Image</button>
+      </div>
+      <!-- New element for displaying authorization status -->
+    </div>
+    
+    <div class="video">
+      <canvas id="canvasOutput"></canvas>
+      <img id="image" />
+    </div>
+    <script src="capture.js"></script>
+  </body>
+</html>

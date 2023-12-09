@@ -8,7 +8,6 @@ socket.on("connect", function () {
 async function playVideo() {
   const video = document.querySelector("#videoElement");
   const canvasOutput = document.querySelector("#canvasOutput");
-  const image = document.querySelector("#output-image");
 
   video.width = 500;
   video.height = 375;
@@ -40,24 +39,27 @@ async function playVideo() {
 
   setInterval(() => {
     if (captureButtonClicked) {
+      canvasOutput.classList.remove("hidden");
+      console.log(canvasOutput.classList)
       cap.read(src);
-      video.classList.add('hidden');
-      image.classList.add('hidden');
-      canvasOutput.classList.remove('hidden')
 
       // Draw the video frame onto the canvas
       const ctx = canvasOutput.getContext("2d");
       ctx.drawImage(video, 0, 0, video.width, video.height);
 
       var type = "image/png";
-      var data = canvasOutput.toDataURL(type);
-      data = data.replace("data:" + type + ";base64,", ""); //split off junk at the beginning
+      var image = canvasOutput.toDataURL(type);
+      image = image.replace("data:" + type + ";base64,", ""); //split off junk at the beginning
 
-      socket.emit("image", data);
+      const name = document.getElementById('new-user-name').value;
+      const data = {image, name};
+      console.log("value of name: ", data)
+      
+      socket.emit("new-auth-image", data);
 
       captureButtonClicked = false; // Reset the flag
     }
-  }, 1000 / FPS);
+  }, 10_000 / FPS);
 }
 
 async function onCVLoad() {
@@ -78,56 +80,38 @@ async function onCVLoad() {
     }
   }
 }
+
 function captureImage() {
   captureButtonClicked = true;
 }
-socket.on("response_back", function (data) {
-  const video = document.querySelector("#videoElement");
-  const canvasOutput = document.querySelector("#canvasOutput");
-  const image = document.querySelector("#output-image");
 
+socket.on("response_new_auth", function (data) {
+  canvasOutput = document.getElementById("canvasOutput")
+  canvasOutput.classList.add("hidden");
+  console.log(canvasOutput.classList)
+
+  const image_id = document.getElementById("image");
   const authorizationStatus = document.getElementById("authorizationStatus");
 
-  video.classList.add('hidden');
-  canvasOutput.classList.add('hidden');
-  image.classList.remove('hidden');
+  // Display the image
+  image_id.src = data.image;
 
-  if (data.error) {
-    // Handle error case
-    console.log("No Face Detected");
-    authorizationStatus.textContent = "No Face Detected.";
-    authorizationStatus.style.color = "black";
-
-    image.src = ""
+  // Update the authorization status
+  if (data.authorized) {
+    // Handle authorized case
+    console.log("Authorized person detected.");
+    authorizationStatus.textContent = "Authorized person detected.";
+    authorizationStatus.style.color = "green";
   } else {
-    // Display the image
-    image.src = data.image;
-    
-    // Update the authorization status
-    if (data.authorized) {
-      // Handle authorized case
-      console.log("Authorized person detected.");
-      authorizationStatus.textContent = "Authorized person detected.";
-      authorizationStatus.style.color = "green";
-    } else {
-      // Handle unauthorized case
-      console.log("Unauthorized person detected.");
-      authorizationStatus.textContent = "Unauthorized person detected.";
-      authorizationStatus.style.color = "red";
-    }
+    // Handle unauthorized case
+    console.log("Unauthorized person detected.");
+    authorizationStatus.textContent = "Unauthorized person detected.";
+    authorizationStatus.style.color = "red";
   }
-    
+
   // Check if authorized and handle bounding box
   if (!data.authorized && data.boxes) {
     const canvasOutput = document.getElementById("canvasOutput");
     const ctx = canvasOutput.getContext("2d");
   }
-
-  setTimeout(() => {
-    video.classList.remove('hidden');
-    canvasOutput.classList.add('hidden');
-    image.classList.add('hidden');
-    authorizationStatus.textContent = "Push Unlock Button to Access";
-    authorizationStatus.style.color = "black";
-  }, 5000);
 });
