@@ -53,9 +53,63 @@ Use the following command to run the project for development.  By default, this 
 python server.py
 ```
 
-### NOTEBOOKS
+### Jupyter Notebooks
+### Camera_Usage.ipynb - Notebook 1: Camera Configuration
 
-- TODO: DRUV PLEASE ADD NOTES
+This notebook covers camera configuration and usage. It includes the following sections:
+
+- Camera Testing
+- Configuration Saving
+- Capturing Images
+
+*Usage*
+
+This notebook provides instructions for configuring and using a camera, including testing and capturing images.
+
+### facenet_testing.ipynb - Notebook 2: Face Detection and Descriptors
+
+This notebook focuses on face detection and descriptor computation using the Facenet model. It includes the following sections:
+
+- Face Detection
+- Landmark Detection
+- Descriptor Computation
+
+*Usage*
+
+You can follow this notebook to detect faces in images and compute descriptors using the Facenet model.
+
+### FaceRec.ipynb - Notebook 3: Facial Recognition
+
+This notebook focuses on face recognition using a camera and a predefined database of faces. It includes the following sections:
+
+- Capturing Images
+- Face Recognition
+- Database Management
+
+*Usage*
+
+You can follow the notebook to perform face recognition tasks, including capturing images and managing the face database.
+
+## whispers.ipynb - Notebook 4: Graph-based Face Recognition
+
+This notebook explores a graph-based approach to face recognition, specifically using the Whispers algorithm. It includes the following sections:
+
+- Data Preprocessing
+- Graph Creation
+- Whispers Algorithm Application
+
+*Usage*
+
+You can use this notebook to understand and implement face recognition using the Whispers algorithm.
+
+
+## Requirements:
+
+Make sure you have the necessary Python packages and dependencies installed to run these notebooks. You can install them using the following command:
+
+```bash
+pip install -r requirements.txt
+```
 
 
 Contributing
@@ -112,7 +166,7 @@ The user that runs the server must have privileges to run programs that allow in
 *Minimum System*
 The following is an example environment:
 * Operating System: Ubuntu 20.04.6 LTS
-* Memory: 8 GB
+* Memory: 12 GB
 * Storage: 80 GB
 
 Installed Programs:
