@@ -3,6 +3,9 @@ Authentication Simulator with Computer Vision
 
 The project aims to boost security and convenience in program access by implementing a facial recognition-based authentication system in a web application. This system, employing supervised learning techniques, captures and analyzes facial features through live webcam feeds to accurately identify authorized users, offering an alternative and potentially more secure authentication method.
 
+![CV-Auth](https://github.com/user-attachments/assets/286eed09-aef7-4288-841c-cb1895250436)
+
+
 Table of Contents
 -----------------
 
